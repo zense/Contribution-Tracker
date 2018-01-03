@@ -1,0 +1,32 @@
+<div class="page-header">
+  <%= link_to new_contribution_path, class: 'btn btn-primary' do %>
+    <span class="glyphicon glyphicon-plus"></span>
+    New Contribution
+  <% end %>
+  <h1>My Contributions</h1>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+            <th>Type</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= content_tag_for(:tr, @contributions) do |contribution| %>
+            <td><%= contribution.contribution_type %></td>
+            <td><%= contribution.name %></td>
+            <td><%= contribution.description %></td>
+            <td><%= contribution.status %></td>
+            <td><%= link_to 'Show', contribution %></td>
+        <td><%= link_to 'Edit', edit_contribution_path(contribution) %></td>
+        <td><%= link_to 'Destroy', contribution, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tbody>
+  </table>
+</div>
