@@ -30,6 +30,19 @@ class SessionsController < ApplicationController
   def login
   end
 
+  def addadmin
+    add_admin = params[:add_user]
+    add_admin.admin = true
+    add_admin.save
+  end
+
+  def removeadmin
+    remove_admin = User.find(params[:remove_user])
+    remove_admin.admin = false
+    remove_admin.save
+  end
+
+
   private
   def check_login
     if !current_user

@@ -10,5 +10,7 @@ Rails.application.routes.draw do
   get '/approve', to: 'contributions#approve', as: 'approve'
   get '/reject', to: 'contributions#reject', as: 'reject'
   get '/login', to: 'sessions#login', as: 'login'
+  get '/add_admin', to: 'sessions#addadmin', as: 'add_admin'
+  get '/remove_admin', to: 'sessions#removeadmin', as: 'remove_admin'
 
 end
