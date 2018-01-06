@@ -1,5 +1,11 @@
 class SessionsController < ApplicationController
+  before_action :check_login, only: [:show, :members]
   def new
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @contributions = @user.contributions
   end
 
   def create
@@ -8,13 +14,27 @@ class SessionsController < ApplicationController
 
     if user.valid?
       session[:user_id] = user.id
-      redirect_to request.env['omniauth.origin']
+      redirect_to root_url
     end
   end
 
   def destroy
     reset_session
     redirect_to request.referer
+  end
+
+  def members
+    @members = User.all
+  end
+
+  def login
+  end
+
+  private
+  def check_login
+    if !current_user
+      redirect_to login
+    end
   end
 
 end

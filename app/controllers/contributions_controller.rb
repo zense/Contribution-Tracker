@@ -1,15 +1,17 @@
 class ContributionsController < ApplicationController
-  before_action :set_contribution, only: [:show, :edit, :update, :destroy]
+  before_action :set_contribution, only: [:show, :edit, :destroy]
+  before_action :check_login
 
   # GET /contributions
   # GET /contributions.json
   def index
-    @contributions = Contribution.all.reverse
+      @contributions = current_user.contributions.reverse
   end
 
   # GET /contributions/1
   # GET /contributions/1.json
   def show
+    @user = @contribution.user
   end
 
   # GET /contributions/new
@@ -25,6 +27,8 @@ class ContributionsController < ApplicationController
   # POST /contributions.json
   def create
     @contribution = Contribution.new(contribution_params)
+    @contribution.status = "Pending"
+    @contribution.user = current_user
 
     respond_to do |format|
       if @contribution.save
@@ -42,7 +46,7 @@ class ContributionsController < ApplicationController
   def update
     respond_to do |format|
       if @contribution.update(contribution_params)
-        format.html { redirect_to @contribution, notice: 'Contribution was successfully updated.' }
+        format.html { redirect_to pending_url, notice: 'Contribution was successfully updated.' }
         format.json { render :show, status: :ok, location: @contribution }
       else
         format.html { render :edit }
@@ -61,10 +65,36 @@ class ContributionsController < ApplicationController
     end
   end
 
+  def pending
+    @contribution = Contribution.where status: "Pending"
+  end
+
+  def approve
+    contribution_id = Integer(params[:id])
+    @contribution = Contribution.find(contribution_id)
+    @contribution.status = "Approved"
+    @contribution.save
+    redirect_to pending_url
+  end
+
+  def reject
+    contribution_id = Integer(params[:id])
+    @contribution = Contribution.find(contribution_id)
+    @contribution.status = "Rejected"
+    @contribution.save
+    redirect_to pending_url
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_contribution
       @contribution = Contribution.find(params[:id])
+    end
+
+    def check_login
+      if !current_user
+        redirect_to login_url
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
