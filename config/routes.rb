@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'auto_contributions/create'
+
+  get 'auto_contributions/new'
+
+  get 'auto_contributions/index'
+
   resources :contributions, except: [:index]
   get '/auth/:provider/callback', to: 'sessions#create'
   root 'contributions#index'

@@ -1,0 +1,2 @@
+module AutoContributionsHelper
+end

@@ -6,6 +6,7 @@ class User < ApplicationRecord
       user.uid = auth["uid"]
       user.name = auth["info"]["nickname"]
       user.admin = false
+      user.oauth_token = auth.credentials.token
     end
   end
 end
