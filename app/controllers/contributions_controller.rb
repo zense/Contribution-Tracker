@@ -2,6 +2,7 @@ class ContributionsController < ApplicationController
   before_action :set_contribution, only: [:show, :edit, :destroy]
   before_action :check_login
 
+  # sds
   # GET /contributions
   # GET /contributions.json
   def index
