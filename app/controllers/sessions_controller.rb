@@ -1,4 +1,6 @@
+require 'fetch_contributions.rb'
 class SessionsController < ApplicationController
+  include FetchGithubContributions
   before_action :check_login, only: [:show, :members]
   def new
   end
@@ -40,6 +42,10 @@ class SessionsController < ApplicationController
     remove_admin = User.find(params[:remove_user])
     remove_admin.admin = false
     remove_admin.save
+  end
+
+  def fetch_contributions
+    get_github_contributions
   end
 
 

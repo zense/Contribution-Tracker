@@ -3,13 +3,14 @@ class AutoContributionsController < ApplicationController
   end
 
   def new
-    @client = Octokit::Client.new(login: 'KauNair', password: '')
+    @client = Octokit::Client.new(access_token: User.first.oauth_token)
     all_repos = @client.org_repos('zense')
     @users_contributed_repos = Array.new
 
     i = all_repos.count - 1
     while i >= 0 do
       contributors = @client.contribs(all_repos[i].full_name)
+      puts all_repos[i].full_name
       j = contributors.count - 1
       while j >= 0 do
         if contributors[j].login == current_user.name

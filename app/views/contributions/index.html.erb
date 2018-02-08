@@ -13,6 +13,9 @@
             <th>Type</th>
             <th>Name</th>
             <th>Status</th>
+            <th>Commits</th>
+            <th>Issues</th>
+            <th>Pull req</th>
       </tr>
     </thead>
 
@@ -21,6 +24,9 @@
             <td><%= contribution.contribution_type %></td>
             <td><%= link_to contribution.name, contribution %> </td>
             <td><%= contribution.status %></td>
+            <td><%= contribution.commits %></td>
+            <td><%= contribution.issues %></td>
+            <td><%= contribution.pull_requests %></td>
         <td><%= link_to 'Edit', edit_contribution_path(contribution) %></td>
         <td><%= link_to 'Destroy', contribution, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>

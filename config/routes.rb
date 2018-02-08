@@ -18,5 +18,6 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#login', as: 'login'
   get '/add_admin', to: 'sessions#addadmin', as: 'add_admin'
   get '/remove_admin', to: 'sessions#removeadmin', as: 'remove_admin'
+  get '/fetchcontributions', to: 'sessions#fetch_contributions', as: 'fetch_contributions'
 
 end

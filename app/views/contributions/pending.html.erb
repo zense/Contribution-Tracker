@@ -6,6 +6,11 @@
               <th>Username</th>
               <th>Type</th>
               <th>Name</th>
+              <th>Commits</th>
+              <th>Issues</th>
+              <th>Pull Req</th>
+              <th></th>
+              <th></th>
         </tr>
       </thead>
 
@@ -14,6 +19,9 @@
               <td><%= contribution.user.name %></td>
               <td><%= contribution.contribution_type %></td>
               <td><%= link_to "#{contribution.name}", contribution %></td>
+              <td><%= contribution.commits %></td>
+              <td><%= contribution.issues %></td>
+              <td><%= contribution.pull_requests %></td>
               <td>
                 <%= link_to "Approve", approve_path(id: contribution.id) %>
               </td>
