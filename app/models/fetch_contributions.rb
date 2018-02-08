@@ -2,11 +2,14 @@ require 'net/http'
 
 module FetchGithubContributions
   def get_github_contributions
-    latest_repos
-    get_all_contributors
-    get_number_of_pr
-    get_number_of_commits
-    get_number_of_issues
+#    latest_repos
+#    get_all_contributors
+#    get_number_of_pr
+#    get_number_of_commits
+#    get_number_of_issues
+#    calulate_individual_stats_and_delete_invalid_contributions
+    user_total_stats
+
 
   end
 
@@ -175,6 +178,45 @@ module FetchGithubContributions
        i-=1
     end
   end
+
+  def calulate_individual_stats_and_delete_invalid_contributions
+    all_contribution = Contribution.where contribution_type: "Github Project"
+    i = all_contribution.count
+    while i > 0
+      contribution = all_contribution[i-1]
+      contribution.total = contribution.commits + contribution.pull_requests + contribution.issues
+      if(contribution.total == 0)
+        Contribution.delete(contribution)
+      else
+        contribution.save
+      end
+      i -= 1
+    end
+  end
+
+  def user_total_stats
+    all_users = User.all
+    i = all_users.count
+    while i > 0
+      user = all_users[i-1]
+      user.issues = 0
+      user.commits = 0
+      user.pull_requests = 0
+      user.total = 0
+      all_contributions = user.contributions
+      j = all_contributions.count
+      while j > 0
+        user.issues += all_contributions[j-1].issues
+        user.commits += all_contributions[j-1].commits
+        user.pull_requests += all_contributions[j-1].pull_requests
+        user.total += all_contributions[j-1].total
+        user.save
+        j-=1
+      end
+       i-=1
+    end
+  end
+
 
 end
 
