@@ -12,6 +12,7 @@ class ContributionsController < ApplicationController
   # GET /contributions/1
   # GET /contributions/1.json
   def show
+    @time = "2018-01-01T00:00:00"
     @user = @contribution.user
   end
 
@@ -68,6 +69,7 @@ class ContributionsController < ApplicationController
 
   def pending
     @contribution = Contribution.where status: "Pending"
+    @time = "2018-01-01T00:00:00"
   end
 
   def approve
@@ -81,8 +83,7 @@ class ContributionsController < ApplicationController
   def reject
     contribution_id = Integer(params[:id])
     @contribution = Contribution.find(contribution_id)
-    @contribution.status = "Rejected"
-    @contribution.save
+    @contribution.destroy
     redirect_to pending_url
   end
 

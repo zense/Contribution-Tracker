@@ -2,15 +2,13 @@ require 'net/http'
 
 module FetchGithubContributions
   def get_github_contributions
-#    latest_repos
-#    get_all_contributors
-#    get_number_of_pr
-#    get_number_of_commits
-#    get_number_of_issues
-#    calulate_individual_stats_and_delete_invalid_contributions
+    latest_repos
+    get_all_contributors
+    get_number_of_pr
+    get_number_of_commits
+    get_number_of_issues
+    calulate_individual_stats_and_delete_invalid_contributions
     user_total_stats
-
-
   end
 
   def parse_json(url)
@@ -95,13 +93,15 @@ module FetchGithubContributions
     time = "2018-01-01T00:00:00"
     while i>0
       user = User.find(all_contribution[i-1].user_id).name
-      repo = all_contribution[i-1].name
-      url = "https://api.github.com/repos/zense/#{repo}/commits?author=#{user}&since=#{time}&access_token=#{User.first.oauth_token}"
-      user_commits = parse_json(url)
-      number_of_commits = user_commits.count
-      contribution = all_contribution[i-1]
-      contribution.commits = number_of_commits
-      contribution.save
+      if(user)
+        repo = all_contribution[i-1].name
+        url = "https://api.github.com/repos/zense/#{repo}/commits?author=#{user}&since=#{time}&access_token=#{User.first.oauth_token}"
+        user_commits = parse_json(url)
+        number_of_commits = user_commits.count
+        contribution = all_contribution[i-1]
+        contribution.commits = number_of_commits
+        contribution.save
+      end
        i -= 1
     end
   end
@@ -115,12 +115,13 @@ module FetchGithubContributions
 
       while n > 0
         user = User.find_by name: contributors[n-1]["author"]["login"]
-        if(user == query_user)
-          return true
+        if(user)
+          if(user == query_user)
+            return true
+          end
         end
-         n-=1
+        n-=1
       end
-
       return false
     end
   end
@@ -137,18 +138,19 @@ module FetchGithubContributions
       j = repo_issues.count
 
       while j > 0
-
         issue_author = repo_issues[j-1]["user"]["login"]
-        user_id = (User.find_by name: issue_author).id
-        if(check_contributor(issue_author,repo))
-          contribution = Contribution.find_by name: repo, user_id:user_id
-          contribution.issues += 1
-        else
-          Contribution.create(name: repo, contribution_type: "Github Project", status: "Pending", user_id: user_id, issues: 1)
+        user = User.find_by name: issue_author
+        if(user)
+          user_id = user.id
+          if(check_contributor(issue_author,repo))
+            contribution = Contribution.find_by name: repo, user_id:user_id
+            contribution.issues += 1
+          else
+            Contribution.create(name: repo, contribution_type: "Github Project", status: "Pending", user_id: user_id, issues: 1)
+          end
         end
          j-=1
       end
-
       i-=1
     end
   end
@@ -160,21 +162,21 @@ module FetchGithubContributions
     while i > 0
       contribution = all_contribution[i-1]
       user = User.find(contribution.user_id).name
-      repo = contribution.name
-      url = "https://api.github.com/repos/zense/#{repo}/pulls?state=all&access_token=#{User.first.oauth_token}"
-      repo_prs = parse_json(url)
-      j = repo_prs.count
-      count = 0
-      while j > 0
-        if(repo_prs[j-1]["user"]["login"] == user)
-          count += 1
+      if(user)
+        repo = contribution.name
+        url = "https://api.github.com/repos/zense/#{repo}/pulls?state=all&access_token=#{User.first.oauth_token}"
+        repo_prs = parse_json(url)
+        j = repo_prs.count
+        count = 0
+        while j > 0
+          if(repo_prs[j-1]["user"]["login"] == user)
+            count += 1
+          end
+          j -= 1
         end
-
-        j -= 1
+        contribution.pull_requests = count
+        contribution.save
       end
-
-      contribution.pull_requests = count
-      contribution.save
        i-=1
     end
   end
@@ -216,7 +218,5 @@ module FetchGithubContributions
        i-=1
     end
   end
-
-
 end
 

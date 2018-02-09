@@ -1,7 +1,8 @@
 require 'fetch_contributions.rb'
 class SessionsController < ApplicationController
   include FetchGithubContributions
-  before_action :check_login, only: [:show, :members]
+  before_action :check_login, only: [:show]
+
   def new
   end
 
@@ -25,8 +26,8 @@ class SessionsController < ApplicationController
     redirect_to request.referer
   end
 
-  def members
-    @members = User.all
+  def leaderboard
+    @users = User.order(:total).reverse
   end
 
   def login
@@ -45,7 +46,9 @@ class SessionsController < ApplicationController
   end
 
   def fetch_contributions
-    get_github_contributions
+    if check_admin
+      get_github_contributions
+    end
   end
 
 
@@ -53,6 +56,14 @@ class SessionsController < ApplicationController
   def check_login
     if !current_user
       redirect_to login
+    end
+  end
+
+  def check_admin
+    if current_user
+      current_user.admin
+    else
+      false
     end
   end
 

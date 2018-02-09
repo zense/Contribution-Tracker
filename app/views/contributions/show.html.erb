@@ -17,14 +17,38 @@
   <dt>Type:</dt>
   <dd><%= @contribution.contribution_type %></dd>
 
-  <dt>Name:</dt>
-  <dd><%= @contribution.name %></dd>
+  <%if @contribution.contribution_type == "Github Project"%>
+    <dt>Name:</dt>
+    <dd><%=link_to @contribution.name, "https://github.com/zense/#{@contribution.name}", target: :_blank%></dd>
 
-  <dt>Description:</dt>
-  <dd><%= @contribution.description %></dd>
+    <dt>Commits:</dt>
+    <dd><%=link_to @contribution.commits, "https://github.com/zense/#{@contribution.name}/commits?author=#{@user.name}&since=#{@time}" , target: :_blank %></dd>
 
-  <dt>Status:</dt>
-  <dd><%= @contribution.status %></dd>
+    <dt>Issues:</dt>
+    <dd><%=link_to @contribution.issues, "https://github.com/zense/#{@contribution.name}/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+author%3A#{@user.name}" , target: :_blank %></dd>
+
+    <dt>Pull_requests:</dt>
+    <dd><%=link_to @contribution.pull_requests, "https://github.com/zense/#{@contribution.name}/pulls?author=#{@user.name}&state=all&since=#{@time}" , target: :_blank %></dd>
+
+
+    <dt>Total:</dt>
+    <dd><%=@contribution.total %>
+
+    <dt>Status:</dt>
+    <dd><%= @contribution.status %></dd>
+
+
+
+<%else%>
+    <dt>Name:</dt>
+    <dd><%= @contribution.name %></dd>
+
+    <dt>Description:</dt>
+    <dd><%= @contribution.description %></dd>
+
+    <dt>Status:</dt>
+    <dd><%= @contribution.status %></dd>
+  <%end%>
 
 
 </dl>
