@@ -99,6 +99,13 @@ module FetchGithubContributions
         number_of_commits = user_commits.count
         contribution = all_contribution[i-1]
         contribution.commits = number_of_commits
+        
+        #TODO
+        #TODO generalize for other empty repos
+        #for repos like new_projects
+        if repo == "new_projects"
+          contribution.commits = 0
+        end
         contribution.save
       end
        i -= 1
