@@ -1,5 +1,6 @@
 require 'net/http'
 
+$time = "2018-01-01T00:00:00"
 module FetchGithubContributions
   def get_github_contributions
     latest_repos
@@ -27,9 +28,8 @@ module FetchGithubContributions
     all_repos = fetch_all_repos
     i = all_repos.count
     while i > 0
-      time = "2018-01-01T00:00:00"
       repo = all_repos[i - 1]["name"]
-      url = "https://api.github.com/repos/zense/#{repo}/commits?since=#{time}&access_token=#{User.first.oauth_token}"
+      url = "https://api.github.com/repos/zense/#{repo}/commits?since=#{$time}&access_token=#{User.first.oauth_token}"
       uri = URI(url)
       response = Net::HTTP.get(uri)
       
@@ -69,7 +69,7 @@ module FetchGithubContributions
       while n > 0
         user = User.find_by name: repo_info[n-1]["author"]["login"]
         if(user)
-          contribution = Contribution.create(name: repo, contribution_type: "Github Project", status: "Pending", user: user)
+          contribution = Contribution.create(name: repo, contribution_type: "Github Project", status: "Approved", user: user)
         end
         n -= 1
       end
@@ -90,12 +90,11 @@ module FetchGithubContributions
   def get_number_of_commits
     all_contribution = Contribution.where contribution_type: "Github Project"
     i = all_contribution.count
-    time = "2018-01-01T00:00:00"
     while i>0
       user = User.find(all_contribution[i-1].user_id).name
       if(user)
         repo = all_contribution[i-1].name
-        url = "https://api.github.com/repos/zense/#{repo}/commits?author=#{user}&since=#{time}&access_token=#{User.first.oauth_token}"
+        url = "https://api.github.com/repos/zense/#{repo}/commits?author=#{user}&since=#{$time}&access_token=#{User.first.oauth_token}"
         user_commits = parse_json(url)
         number_of_commits = user_commits.count
         contribution = all_contribution[i-1]
@@ -146,7 +145,7 @@ module FetchGithubContributions
             contribution = Contribution.find_by name: repo, user_id:user_id
             contribution.issues += 1
           else
-            Contribution.create(name: repo, contribution_type: "Github Project", status: "Pending", user_id: user_id, issues: 1)
+            Contribution.create(name: repo, contribution_type: "Github Project", status: "Approved", user_id: user_id, issues: 1)
           end
         end
          j-=1
@@ -158,7 +157,6 @@ module FetchGithubContributions
   def get_number_of_pr
     all_contribution = Contribution.where contribution_type: "Github Project"
     i = all_contribution.count
-    time = "2018-01-01T00:00:00"
     while i > 0
       contribution = all_contribution[i-1]
       user = User.find(contribution.user_id).name

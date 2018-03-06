@@ -3,22 +3,22 @@
     <thead>
       <tr>
             <th>Leaderboard</th>
-            <th>Total</th>
-            <th>Projects</th>
+            <th>Projects/Other</th>
             <th>Commits</th>
             <th>Issues</th>
             <th>Pull Req</th>
+            <th>Total</th>
       </tr>
     </thead>
 
     <tbody>
       <%= content_tag_for(:tr, @users) do |user| %>
         <td><%= link_to user.name, "/users/#{user.id}" %> </td>
-        <td><%= user.total %></td>
         <td><%= user.contributions.count %></td>
         <td><%= user.commits %></td>
         <td><%= user.issues %></td>
         <td><%= user.pull_requests %></td>
+        <td><%= user.total %></td>
       <% end %>
     </tbody>
   </table>

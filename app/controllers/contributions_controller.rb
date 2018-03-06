@@ -6,7 +6,9 @@ class ContributionsController < ApplicationController
   # GET /contributions
   # GET /contributions.json
   def index
-      @contributions = current_user.contributions.reverse
+    @contributions = current_user.contributions.reverse
+    @time = "2018-01-01T00:00:00"
+    @user = current_user
   end
 
   # GET /contributions/1
