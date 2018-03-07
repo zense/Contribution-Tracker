@@ -3,6 +3,14 @@ require 'net/http'
 $time = "2018-01-01T00:00:00"
 module FetchGithubContributions
   def get_github_contributions
+    #run everything twice
+    #read https://developer.github.com/v3/repos/statistics/#a-word-about-caching
+    latest_repos
+    get_all_contributors
+    get_number_of_pr
+    get_number_of_commits
+    get_number_of_issues
+
     latest_repos
     get_all_contributors
     get_number_of_pr
