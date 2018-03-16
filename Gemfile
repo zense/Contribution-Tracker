@@ -6,6 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'bootstrap-generators', '~> 3.3.4'
+gem 'whenever'
 gem 'omniauth-github'
 gem 'record_tag_helper', '~> 1.0'
 gem 'octokit', "~> 4.0"
