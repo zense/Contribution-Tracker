@@ -2,6 +2,7 @@
   <table class="table table-striped table-bordered table-hover">
     <thead>
       <tr>
+            <th></th>
             <th>Leaderboard</th>
             <th>Projects/Other</th>
             <th>Commits</th>
@@ -12,7 +13,9 @@
     </thead>
 
     <tbody>
+      <% i = 1 %>
       <%= content_tag_for(:tr, @users) do |user| %>
+        <td><%= i %> </td> <% i += 1 %>
         <td><%= link_to user.name, "/users/#{user.id}" %> </td>
         <td><%= user.contributions.count %></td>
         <td><%= user.commits %></td>

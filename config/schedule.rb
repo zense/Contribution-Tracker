@@ -19,10 +19,16 @@
 
 # Learn more: http://github.com/javan/whenever
 #
-set :environment, 'development'
+require "./app/models/fetch_contributions.rb"
+
+set :environment, 'production'
 set :PATH, ENV['PATH']
-set :output,'log/cron_log.log'
-every :minute do
-  command "echo 'hello'"
+every 1.minutes do
+  command "echo cron is running yayyy"
 end
+
+every 1.days do
+  runner "FetchGithubContributions.get_github_contributions"
+end
+
 
