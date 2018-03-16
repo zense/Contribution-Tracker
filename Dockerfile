@@ -2,7 +2,7 @@ FROM ruby:2.4
 
 # Install all dependencies upfront so the docker build can be cached
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
-ENV RAILS_ENV=development
+ENV RAILS_ENV=production
 
 WORKDIR /app
 ADD .gemrc /app
@@ -15,6 +15,5 @@ ADD Gemfile.lock /app/
 RUN bundle install --jobs 8
 
 ADD . /app
-RUN rake db:create && rake db:migrate
 EXPOSE 3000
 CMD ["bundle", "exec", "rails", "s"]
