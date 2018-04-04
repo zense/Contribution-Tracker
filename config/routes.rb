@@ -7,6 +7,14 @@ Rails.application.routes.draw do
   get 'auto_contributions/index'
 
   resources :contributions, except: [:index]
+  resources :users
+  resources :projects
+  get '/projects/:id/mentors', to: 'projects#add_mentors', as: 'add_mentors'
+  get '/projects/:id/mentees', to: 'projects#add_mentees', as: 'add_mentees'
+  post '/projects/:id/mentors', to: 'projects#new_mentor', as: 'new_mentor'
+  post '/projects/:id/mentees', to: 'projects#new_mentee', as: 'new_mentee'
+  get '/projects/:id/save_mentors', to: 'projects#save_mentors', as: 'save_mentors'
+  get '/projects/:id/save_mentees', to: 'projects#save_mentees', as: 'save_mentees'
   get '/auth/:provider/callback', to: 'sessions#create'
   root 'contributions#index'
   get '/logout', to:'sessions#destroy'

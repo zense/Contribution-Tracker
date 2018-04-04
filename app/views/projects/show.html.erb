@@ -1,0 +1,40 @@
+<div class="page-header">
+  <%= link_to projects_path, class: 'btn btn-default' do %>
+    <span class="glyphicon glyphicon-list-alt"></span>
+    Back
+  <% end %>
+    <%= link_to edit_project_path(@project), class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      Edit
+    <% end %>
+    <%= link_to add_mentees_path(@project), class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      Add Mentees
+    <% end %>
+    <%= link_to add_mentors_path(@project), class: 'btn btn-primary' do %>
+      <span class="glyphicon glyphicon-pencil"></span>
+      Add Mentors
+    <% end %>
+  <h1>Show project</h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt>Title:</dt>
+  <dd><%= @project.title %></dd>
+
+  <dt>Description:</dt>
+  <dd><%= @project.description %></dd>
+
+  <dt>Mentors:</dt>
+  <dd><% @project.mentors.each do |mentor| %>
+      <%= mentor.name %>
+      <% end %> </dd>
+  
+
+  <dt>Mentees:</dt>
+  <dd><% @project.mentees.each do |mentee| %>
+    <%= mentee.name %>
+    <% end %> </dd>
+
+
+</dl>

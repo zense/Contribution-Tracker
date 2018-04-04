@@ -1,6 +1,5 @@
-require 'fetch_contributions.rb'
+require 'fetch_contribution.rb'
 class SessionsController < ApplicationController
-  include FetchGithubContributions
   before_action :check_login, only: [:show]
   before_action :check_admin, only: [:fetch_contributions]
 
@@ -46,7 +45,7 @@ class SessionsController < ApplicationController
   end
 
   def fetch_contributions
-      get_github_contributions
+      #get_github_contributions
   end
 
 
