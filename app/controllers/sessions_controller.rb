@@ -45,7 +45,7 @@ class SessionsController < ApplicationController
   end
 
   def fetch_contributions
-      #get_github_contributions
+    a = FetchGithubContribution.new.get_github_contributions
   end
 
 

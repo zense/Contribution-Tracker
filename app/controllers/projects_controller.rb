@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :add_mentees, :add_mentors]
+  before_action :set_project, except: :index
 
   # GET /projects
   # GET /projects.json
@@ -8,9 +8,20 @@ class ProjectsController < ApplicationController
   end
 
   @@list_of_users = []
+
+  def list_of_users
+    @@list_of_users
+  end
+
+  def remove_users
+    @role = Role.where(user_id: params[:user_id], project_id: @project.id)
+    @role =@role.first
+    Role.destroy @role.id
+    redirect_to project_path(@project.id)
+  end
+
   def add_mentors
     @user = User.new
-    @list_of_users = @@list_of_users
   end
 
   def new_mentor
@@ -31,7 +42,6 @@ class ProjectsController < ApplicationController
 
   def add_mentees
     @user = User.new
-    @list_of_users = @@list_of_users
   end
 
   def new_mentee
@@ -47,9 +57,13 @@ class ProjectsController < ApplicationController
     redirect_to project_path
   end
 
+
+
   # GET /projects/1
   # GET /projects/1.json
   def show
+    @@list_of_users = []
+    @user = @project.mentees.first
   end
 
   # GET /projects/new

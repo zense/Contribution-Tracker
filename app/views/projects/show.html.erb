@@ -25,16 +25,33 @@
   <dt>Description:</dt>
   <dd><%= @project.description %></dd>
 
-  <dt>Mentors:</dt>
-  <dd><% @project.mentors.each do |mentor| %>
-      <%= mentor.name %>
-      <% end %> </dd>
   
-
-  <dt>Mentees:</dt>
-  <dd><% @project.mentees.each do |mentee| %>
-    <%= mentee.name %>
-    <% end %> </dd>
+  </br>
+  <div class='table-responsive'>
+    <table class="table table-striped table-bordered table-hover">
+      <thead>
+        <tr>
+          <th class="col-md-1">Mentors:</th>
+          <th><% @project.mentors.each do |mentor| %>
+              <%=link_to mentor.name,users_path(user_id: mentor.id)  %>
+              <%=link_to 'X',remove_users_path(user_id: mentor.id) %>
+              
+          </br>
+        <% end %> </th>
+        </tr>
+          <tr>
+          <th>Mentees:</th>
+          <th><% @project.mentees.each do |mentee| %>
+          <%=link_to mentee.name,users_path(id: mentee.id)  %>
+          <%=link_to 'X',remove_users_path(user_id: mentee.id) %>
+          </br>
+        <% end %> </th>
+        <th> <%=@user.contributions %></th>
+        </tr>
+      </thead>
+      </div>
+    </div>
+  </div>
 
 
 </dl>

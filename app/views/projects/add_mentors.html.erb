@@ -23,7 +23,7 @@
   </div>
 
   <div class="col-md-6">
-    <% @list_of_users.each do |user| %>
+    <% ProjectsController.class_variable_get(:@@list_of_users).each do |user| %>
       <h5><strong><%= user.name unless user == nil%></strong></h5>
     <% end %>
     <%= link_to "Save Mentors", save_mentors_path, class: 'btn btn-primary'%>
