@@ -1,24 +1,24 @@
 require 'net/http'
 
 $time = "2018-01-01T00:00:00"
-module FetchGithubContributions
+class FetchGithubContribution
   def get_github_contributions
     #run everything twice
     #read https://developer.github.com/v3/repos/statistics/#a-word-about-caching
-    latest_repos
-    get_all_contributors
-    get_number_of_pr
-    get_number_of_commits
-    get_number_of_issues
+    self.latest_repos
+    self.get_all_contributors
+    self.get_number_of_pr
+    self.get_number_of_commits
+    self.get_number_of_issues
 
-    latest_repos
-    get_all_contributors
-    get_number_of_pr
-    get_number_of_commits
-    get_number_of_issues
-    calulate_individual_stats_and_delete_invalid_contributions
-    user_total_stats
-  end
+    self.latest_repos
+    self.get_all_contributors
+    self.get_number_of_pr
+    self.get_number_of_commits
+    self.get_number_of_issues
+    self.calulate_individual_stats_and_delete_invalid_contributions
+    self.user_total_stats
+    end
 
   def parse_json(url)
     uri = URI(url)
@@ -33,7 +33,7 @@ module FetchGithubContributions
   #get all repos after a specific date and save it to the database
   def latest_repos
     latest_repos = []
-    all_repos = fetch_all_repos
+    all_repos = self.fetch_all_repos
     i = all_repos.count
     while i > 0
       repo = all_repos[i - 1]["name"]
