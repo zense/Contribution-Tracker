@@ -10,8 +10,7 @@ ADD Gemfile /app/
 ADD Gemfile.lock /app/
 
 # If you are using gemstash then uncomment the below line.
-# RUN bundle config mirror.https://rubygems.org http://172.17.0.1:9292
-
+RUN bundle config mirror.https://rubygems.org http://172.17.0.1:9292
 RUN bundle install --jobs 8
 
 ADD . /app
