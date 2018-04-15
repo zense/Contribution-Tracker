@@ -1,0 +1,19 @@
+%h3
+  = @project.title
+%h4 Add Mentees
+.row
+  .col-md-6
+    = form_for(@user,url: {controller: 'projects', action: 'new_mentee'}, html: { class: "form-horizontal", role: "form" }) do |f|
+      .form-group
+        = f.label :name, class: "col-sm-2 control-label"
+        .col-sm-10
+          = f.text_field :name, class: "form-control"
+      .form-group
+        .col-sm-offset-2.col-sm-10
+          = button_tag type: 'submit', class: 'btn btn-primary' do
+            Add
+  .col-md-6
+    - ProjectsController.class_variable_get(:@@list_of_users).each do |user|
+      %h5
+        %strong= user.name unless user == nil
+    = link_to "Save Mentees", save_mentees_path, class: 'btn btn-primary'

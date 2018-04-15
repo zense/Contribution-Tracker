@@ -1,0 +1,42 @@
+%h3= @user.name
+- if current_user.admin && !@user.admin
+  = link_to "Add as admin", add_admin_path(add_user: @user), class: "btn btn-primary"
+- elsif current_user.admin
+  = link_to "Remove admin", remove_admin_path(remove_user: @user), class: "btn btn-primary"
+%h4 Contribution Stats
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th
+          Project/Other: #{@user.contributions.count}
+        %th
+          Commits: #{@user.commits}
+        %th
+          Issues: #{@user.issues}
+        %th
+          Pull Req: #{@user.pull_requests}
+        %th
+          Total: #{@user.total}
+%h4 Details
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th Type
+        %th Name
+        %th Commits
+        %th Issues
+        %th Pull Req
+        %th Total
+        %th Status
+    %tbody
+      = content_tag_for(:tr, @contributions) do |contribution|
+        %td= contribution.contribution_type
+        %td
+          = link_to contribution.name, contribution
+        %td= link_to contribution.commits, "https://github.com/zense/#{contribution.name}/commits?author=#{contribution.user.name}&since=#{@time}" , target: :_blank
+        %td= link_to contribution.issues, "https://github.com/zense/#{contribution.name}/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+author%3A#{contribution.user.name}" , target: :_blank
+        %td= link_to contribution.pull_requests, "https://github.com/zense/#{contribution.name}/pulls?author=#{contribution.user.name}&state=all&since=#{@time}" , target: :_blank
+        %td= contribution.total
+        %td= contribution.status

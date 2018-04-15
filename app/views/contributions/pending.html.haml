@@ -1,0 +1,25 @@
+- if current_user.admin
+  .table-responsive
+    %table.table.table-striped.table-bordered.table-hover
+      %thead
+        %tr
+          %th Username
+          %th Type
+          %th Name
+          %th Commits
+          %th Issues
+          %th Pull Req
+          %th
+          %th
+      %tbody
+        = content_tag_for(:tr, @contribution) do |contribution|
+          %td= contribution.user.name
+          %td= contribution.contribution_type
+          %td= link_to "#{contribution.name}", contribution
+          %td= link_to contribution.commits, "https://github.com/zense/#{contribution.name}/commits?author=#{contribution.user.name}&since=#{@time}", target: :_blank
+          %td= link_to contribution.issues, "https://github.com/zense/#{contribution.name}/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aall+author%3A#{contribution.user.name}", target: :_blank
+          %td= link_to contribution.pull_requests,"https://github.com/zense/#{contribution.name}/pulls?author=#{contribution.user.name}&state=all&since=#{@time}", target: :_blank
+          %td
+            = link_to "Approve", approve_path(id: contribution.id)
+          %td
+            = link_to "Reject", reject_path(id: contribution.id)

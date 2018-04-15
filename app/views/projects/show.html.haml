@@ -1,0 +1,35 @@
+.page-header
+  = link_to projects_path, class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-list-alt
+    Back
+  = link_to edit_project_path(@project), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Edit
+  = link_to add_mentees_path(@project), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Add Mentees
+  = link_to add_mentors_path(@project), class: 'btn btn-primary' do
+    %span.glyphicon.glyphicon-pencil
+    Add Mentors
+  %h1 Show project
+%dl.dl-horizontal
+  %dt Title:
+  %dd= @project.title
+  %dt Description:
+  %dd= @project.description
+  .row.row-custom
+    .col-md-1
+      %strong Mentors:
+    .col-md-11
+      - @project.mentors.each do |mentor|
+        = link_to mentor.name,users_path(user_id: mentor.id)
+        = link_to 'X',remove_users_path(user_id: mentor.id)
+    - @project.mentees.each do |mentee|
+      .row.col-custom
+        .col-md-1
+          %strong Mentees:
+        .col-md-3
+          = link_to mentee.name,users_path(id: mentee.id)
+          = link_to 'X',remove_users_path(user_id: mentee.id)
+        .col-md-6
+          = @user.contributions

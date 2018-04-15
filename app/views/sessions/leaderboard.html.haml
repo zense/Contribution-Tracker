@@ -1,0 +1,24 @@
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th
+        %th Leaderboard
+        %th Projects/Other
+        %th Commits
+        %th Issues
+        %th Pull Req
+        %th Total
+    %tbody
+      - i = 1
+      = content_tag_for(:tr, @users) do |user|
+        %td
+          = i
+        - i += 1
+        %td
+          = link_to user.name, "/users/#{user.id}"
+        %td= user.contributions.count
+        %td= user.commits
+        %td= user.issues
+        %td= user.pull_requests
+        %td= user.total

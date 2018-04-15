@@ -6,8 +6,7 @@ git_source(:github) do |repo_name|
 end
 
 gem 'bootstrap-generators', '~> 3.3.4'
-gem 'html2haml'
-gem 'erb2haml'
+gem 'haml-rails'
 gem 'omniauth-github'
 gem 'sidekiq'
 gem 'redis-namespace'
