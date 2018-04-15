@@ -6,21 +6,8 @@
   <h1>My Contributions</h1>
 </div>
 
-<h4> Stats</h4>
-<div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
-    <thead>
-      <tr>
-        <th>Project/Other: <%= @user.contributions.count %> </th>
-        <th>Commits: <%= @user.commits %></th>
-            <th>Issues: <%= @user.issues %></th>
-            <th>Pull Req: <%= @user.pull_requests %></th>
-            <th>Total: <%= @user.total %></th>
-      </tr>
-    </thead>
-  </table>
-</div>
 
+<h4>Projects</h4>
 <h4>Details</h4>
 <div class="table-responsive">
   <table class="table table-striped table-bordered table-hover">
@@ -48,5 +35,19 @@
         <td><%= link_to 'Destroy', contribution, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
     </tbody>
+  </table>
+</div>
+<h4> Stats</h4>
+<div class="table-responsive">
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <th>Project/Other: <%= @user.contributions.count %> </th>
+        <th>Commits: <%= @user.commits %></th>
+            <th>Issues: <%= @user.issues %></th>
+            <th>Pull Req: <%= @user.pull_requests %></th>
+            <th>Total: <%= @user.total %></th>
+      </tr>
+    </thead>
   </table>
 </div>
