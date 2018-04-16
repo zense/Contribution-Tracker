@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, except: :index
+  before_action :set_project, except: [:index,:new,:create]
 
   # GET /projects
   # GET /projects.json
@@ -7,18 +7,18 @@ class ProjectsController < ApplicationController
     @projects = Project.all
   end
 
-  @@list_of_users = []
-
-  def list_of_users
-    @@list_of_users
+  def remove_users
+    @mentors = @project.mentors
+    @mentees = @project.mentees
   end
 
-  def remove_users
+  def delete_user
     @role = Role.where(user_id: params[:user_id], project_id: @project.id)
     @role =@role.first
     Role.destroy @role.id
-    redirect_to project_path(@project.id)
+    redirect_to remove_users_path(@project.id)
   end
+
 
   def add_mentors
     @user = User.new
@@ -26,18 +26,12 @@ class ProjectsController < ApplicationController
 
   def new_mentor
     @user = User.find_by name: params_user[:name]
-
-    @@list_of_users << @user unless @@list_of_users.include? @user
-    puts "\n\n\n",@@list_of_users
+    Role.create user_id: @user.id, project_id: params[:id], role_type: 'mentor' 
     redirect_to add_mentors_path
   end
 
 
   def save_mentors
-    @@list_of_users.each do |user|
-      Role.create user_id: user.id, project_id: params[:id], role_type: 'mentor' unless user == nil
-    end
-    redirect_to project_path
   end
 
   def add_mentees
@@ -46,15 +40,11 @@ class ProjectsController < ApplicationController
 
   def new_mentee
     @user = User.find_by name: params_user[:name]
-    @@list_of_users << @user unless @@list_of_users.include? @user
+    Role.create user_id: @user.id, project_id: params[:id], role_type: 'mentee' 
     redirect_to add_mentees_path
   end
 
   def save_mentees
-    @@list_of_users.each do |user|
-      Role.create user_id: user.id, project_id: params[:id], role_type: 'mentee' unless user == nil
-    end
-    redirect_to project_path
   end
 
 
@@ -62,8 +52,8 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    @@list_of_users = []
-    @user = @project.mentees.first
+    @user 
+    @contribution 
   end
 
   # GET /projects/new

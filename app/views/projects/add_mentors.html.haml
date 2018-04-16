@@ -1,6 +1,15 @@
 %h3
   = @project.title
-%h4 Add Mentors
+%strong
+  %h4 Add Mentors
+%h4.h4-custom
+  Mentors:
+-@project.mentors.each do |mentor|
+  %h5.h5-custom
+    =mentor.name
+%br
+%br
+
 .row
   .col-md-6
     = form_for(@user,url: {controller: 'projects', action: 'new_mentor'}, html: { class: "form-horizontal", role: "form" }) do |f|
@@ -12,8 +21,6 @@
         .col-sm-offset-2.col-sm-10
           = button_tag type: 'submit', class: 'btn btn-primary' do
             Add
-  .col-md-6
-    - ProjectsController.class_variable_get(:@@list_of_users).each do |user|
-      %h5
-        %strong= user.name unless user == nil
-    = link_to "Save Mentors", save_mentors_path, class: 'btn btn-primary'
+= link_to project_path(@project), class: 'btn btn-default' do
+  %span.glyphicon.glyphicon-pencil
+  Done

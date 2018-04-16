@@ -10,7 +10,8 @@ Rails.application.routes.draw do
     post 'mentees', to: 'projects#new_mentee', as: 'new_mentee'
     get 'save_mentors', to: 'projects#save_mentors', as: 'save_mentors'
     get 'save_mentees', to: 'projects#save_mentees', as: 'save_mentees'
-    get 'remove_users/:user_id', to: 'projects#remove_users', as: 'remove_users'
+    get 'remove_users', to: 'projects#remove_users', as: 'remove_users'
+    get 'delete_user', to: 'projects#delete_user', as: 'delete_user'
   end
 
   get '/auth/:provider/callback', to: 'sessions#create'

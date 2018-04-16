@@ -4,20 +4,23 @@
     New Contribution
   %h1 My Contributions
 %h4 Projects
+-current_user.working_projects.each do |project|
+  %ul=project.title
+  %br
+  %br
+  %br
 %h4 Details
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
     %thead
       %tr
-        %th Type
-        %th Name
+        %th Title
         %th Status
         %th Commits
         %th Issues
         %th Pull req
     %tbody
       = content_tag_for(:tr, @contributions) do |contribution|
-        %td= contribution.contribution_type
         %td
           = link_to contribution.name, contribution
         %td= contribution.status

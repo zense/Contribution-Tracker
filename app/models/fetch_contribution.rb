@@ -18,6 +18,7 @@ class FetchGithubContribution
     self.get_number_of_issues
     self.calulate_individual_stats_and_delete_invalid_contributions
     self.user_total_stats
+    self.saveprojects
     end
 
   def parse_json(url)
@@ -231,5 +232,12 @@ class FetchGithubContribution
        i-=1
     end
   end
+  def saveprojects
+    Repo.each do |repo|
+      Project.create title: repo.name
+    end
+  end
+
+
 end
 
