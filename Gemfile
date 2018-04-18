@@ -16,7 +16,7 @@ gem 'record_tag_helper', '~> 1.0'
 gem 'octokit', "~> 4.0"
 gem 'github_api', '~> 0.18.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'pg'
+gem 'pg', '~> 0.17.1'
 gem 'rails', '~> 5.1.4'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
