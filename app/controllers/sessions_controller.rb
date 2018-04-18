@@ -1,6 +1,5 @@
-require 'fetch_contributions.rb'
+require 'fetch_contribution.rb'
 class SessionsController < ApplicationController
-  include FetchGithubContributions
   before_action :check_login, only: [:show]
   before_action :check_admin, only: [:fetch_contributions]
 
@@ -27,7 +26,7 @@ class SessionsController < ApplicationController
   end
 
   def leaderboard
-    @users = User.order(:total).reverse
+    @users = User.joins(:contributions).group("users.id").order("count(users.id) DESC")
   end
 
   def login
@@ -46,7 +45,7 @@ class SessionsController < ApplicationController
   end
 
   def fetch_contributions
-      get_github_contributions
+    a = FetchGithubContribution.new.get_github_contributions
   end
 
 

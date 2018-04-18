@@ -8,6 +8,7 @@ end
 
 gem 'rake', '~> 12.3.0'
 gem 'bootstrap-generators', '~> 3.3.4'
+gem 'haml-rails'
 gem 'omniauth-github'
 gem 'sidekiq'
 gem 'redis-namespace'

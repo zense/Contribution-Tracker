@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180208135249) do
+ActiveRecord::Schema.define(version: 20180402125435) do
 
   create_table "contributions", force: :cascade do |t|
     t.string "contribution_type"
@@ -24,13 +24,35 @@ ActiveRecord::Schema.define(version: 20180208135249) do
     t.integer "pull_requests", default: 0
     t.integer "issues", default: 0
     t.integer "total", default: 0
+    t.integer "mentor_id"
+    t.integer "mentee_id"
+    t.index ["mentee_id"], name: "index_contributions_on_mentee_id"
+    t.index ["mentor_id"], name: "index_contributions_on_mentor_id"
     t.index ["user_id"], name: "index_contributions_on_user_id"
+  end
+
+  create_table "projects", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "description"
+    t.string "status"
   end
 
   create_table "repos", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "project_id"
+    t.string "role_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["project_id"], name: "index_roles_on_project_id"
+    t.index ["user_id"], name: "index_roles_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|

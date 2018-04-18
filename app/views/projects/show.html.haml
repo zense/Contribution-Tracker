@@ -1,0 +1,51 @@
+.page-header
+  -if current_user.admin?
+    = link_to project_path(@project),method: 'delete', class: 'btn btn-danger' do
+      %span.glyphicon.glyphicon-pencil
+      Delete
+    = link_to edit_project_path(@project), class: 'btn btn-primary' do
+      %span.glyphicon.glyphicon-pencil
+      Edit
+    = link_to remove_users_path(@project), class: 'btn btn-danger' do
+      %span.glyphicon.glyphicon-pencil
+      Remove Members
+    = link_to add_mentees_path(@project), class: 'btn btn-primary' do
+      %span.glyphicon.glyphicon-pencil
+      Add Mentees
+    = link_to add_mentors_path(@project), class: 'btn btn-primary' do
+      %span.glyphicon.glyphicon-pencil
+      Add Mentors
+  %h1 Show project
+%dl.dl-horizontal
+  %dt Title:
+  %dd= @project.title
+  %dt Description:
+  %dd= @project.description
+  %br
+  .row.row-custom
+    .col-md-1
+      %strong Mentors:
+    .col-md-11
+      - @project.mentors.each do |mentor|
+        = link_to mentor.name,users_path(user_id: mentor.id)
+        %br
+      %br
+    - @project.mentees.each do |mentee|
+      .row.col-custom
+        .col-md-1
+          -if mentee == @project.mentees.first
+            %strong Mentees:
+        .col-md-3
+          = link_to mentee.name,users_path(id: mentee.id)
+        .col-md-6
+          - @contribution = (mentee.contributions.where name: @project.title).first
+          .some-padding
+            Commits:     
+            = @contribution.commits unless @contribution == nil
+          .some-padding
+            Issues: 
+            = @contribution.issues unless @contribution == nil
+          .some-padding
+            PRs: 
+            = @contribution.pull_requests unless @contribution == nil
+

@@ -181,7 +181,7 @@ class FetchGithubContribution
     i = all_contribution.count
     while i > 0
       contribution = all_contribution[i-1]
-      user = User.find(contribution.user_id)
+      user = User.find(contribution.user_id).name
       if(user)
         repo = contribution.name
         url = "https://api.github.com/repos/zense/#{repo}/pulls?state=all&access_token=#{User.first.oauth_token}"
@@ -189,7 +189,7 @@ class FetchGithubContribution
         j = repo_prs.count
         count = 0
         while j > 0
-          if(repo_prs[j-1]["user"]["login"] == user.name)
+          if(repo_prs[j-1]["user"]["login"] == user)
             count += 1
           end
           j -= 1

@@ -1,0 +1,12 @@
+%nav.navbar.navbar-inverse.navbar-fixed-top{:role => "navigation"}
+  .container
+    .navbar-header
+      #navbar.collapse.navbar-collapse
+        %ul.nav.navbar-nav.navbar
+          %li
+            %a{:href => ""} Zense
+%h1.logintext
+  Contribution tracker
+  %h4.logintext2 Login with github
+  .loginbutton
+    = link_to "Login", "/auth/github", class: "btn btn-primary"
