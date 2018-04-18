@@ -26,7 +26,7 @@ class SessionsController < ApplicationController
   end
 
   def leaderboard
-    @users = User.order(:total).reverse
+    @users = User.joins(:contributions).group("users.id").order("count(users.id) DESC")
   end
 
   def login

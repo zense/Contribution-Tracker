@@ -1,33 +1,35 @@
-%h3= @project.title
-%br
+-if current_user.admin
+  %h3= @project.title
+  %br
 
-  .row
-    .col-md-6
-      %table.table
-        %tr
-          %th
-            %h4 Mentors
-          %th
-          
-        -@mentors.each do |mentor|
+    .row
+      .col-md-6
+        %table.table
           %tr
-            %td
-              =mentor.name
-              =link_to 'remove', delete_user_path(user_id: mentor.id)
-    .col-md-6
-      %table.table
-        %tr
-          %th
-            %h4 Mentees
-          %th
-          
-        -@mentees.each do |mentee|
+            %th
+              %h4 Mentors
+            %th
+            
+          -@mentors.each do |mentor|
+            %tr
+              %td
+                =mentor.name
+                =link_to 'remove', delete_user_path(user_id: mentor.id)
+      .col-md-6
+        %table.table
           %tr
-            %td
-              =mentee.name
-              =link_to 'remove', delete_user_path(user_id: mentee.id)
-%br
-%br
-= link_to project_path(@project), class: 'btn btn-default' do
-  %span.glyphicon.glyphicon-pencil
-  Done
+            %th
+              %h4 Mentees
+            %th
+            
+          -@mentees.each do |mentee|
+            %tr
+              %td
+                =mentee.name
+                =link_to 'remove', delete_user_path(user_id: mentee.id)
+  %br
+  %br
+  = link_to project_path(@project), class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-pencil
+    Done
+    

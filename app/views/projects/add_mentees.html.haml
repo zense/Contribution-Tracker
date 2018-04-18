@@ -1,26 +1,27 @@
-%h3
-  = @project.title
-%strong
-  %h4 Add Mentees
-%h4.h4-custom
-  Mentees:
--@project.mentees.each do |mentee|
-  %h5.h5-custom
-    =mentee.name
-%br
-%br
+-if current_user.admin
+  %h3
+    = @project.title
+  %strong
+    %h4 Add Mentees
+  %h4.h4-custom
+    Mentees:
+  -@project.mentees.each do |mentee|
+    %h5.h5-custom
+      =mentee.name
+  %br
+  %br
 
-.row
-  .col-md-6
-    = form_for(@user,url: {controller: 'projects', action: 'new_mentee'}, html: { class: "form-horizontal", role: "form" }) do |f|
-      .form-group
-        = f.label :name, class: "col-sm-2 control-label"
-        .col-sm-10
-          = f.text_field :name, class: "form-control"
-      .form-group
-        .col-sm-offset-2.col-sm-10
-          = button_tag type: 'submit', class: 'btn btn-primary' do
-            Add
-= link_to project_path(@project), class: 'btn btn-default' do
-  %span.glyphicon.glyphicon-pencil
-  Done
+  .row
+    .col-md-6
+      = form_for(@user,url: {controller: 'projects', action: 'new_mentee'}, html: { class: "form-horizontal", role: "form" }) do |f|
+        .form-group
+          = f.label :name, class: "col-sm-2 control-label"
+          .col-sm-10
+            = f.text_field :name, class: "form-control"
+        .form-group
+          .col-sm-offset-2.col-sm-10
+            = button_tag type: 'submit', class: 'btn btn-primary' do
+              Add
+  = link_to project_path(@project), class: 'btn btn-default' do
+    %span.glyphicon.glyphicon-pencil
+    Done

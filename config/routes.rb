@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :contributions, except: [:index]
   resources :projects
 
+
   scope '/projects/:id' do
     get 'mentors', to: 'projects#add_mentors', as: 'add_mentors'
     get 'mentees', to: 'projects#add_mentees', as: 'add_mentees'

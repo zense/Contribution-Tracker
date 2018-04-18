@@ -3,21 +3,12 @@
   = link_to "Add as admin", add_admin_path(add_user: @user), class: "btn btn-primary"
 - elsif current_user.admin
   = link_to "Remove admin", remove_admin_path(remove_user: @user), class: "btn btn-primary"
-%h4 Contribution Stats
-.table-responsive
-  %table.table.table-striped.table-bordered.table-hover
-    %thead
-      %tr
-        %th
-          Project/Other: #{@user.contributions.count}
-        %th
-          Commits: #{@user.commits}
-        %th
-          Issues: #{@user.issues}
-        %th
-          Pull Req: #{@user.pull_requests}
-        %th
-          Total: #{@user.total}
+%h4 Projects
+-@user.working_projects.each do |project|
+  %ul=project.title
+%br
+%br
+%br
 %h4 Details
 .table-responsive
   %table.table.table-striped.table-bordered.table-hover
@@ -40,3 +31,18 @@
         %td= link_to contribution.pull_requests, "https://github.com/zense/#{contribution.name}/pulls?author=#{contribution.user.name}&state=all&since=#{@time}" , target: :_blank
         %td= contribution.total
         %td= contribution.status
+%h4 Contribution Stats
+.table-responsive
+  %table.table.table-striped.table-bordered.table-hover
+    %thead
+      %tr
+        %th
+          Project/Other: #{@user.contributions.count}
+        %th
+          Commits: #{@user.commits}
+        %th
+          Issues: #{@user.issues}
+        %th
+          Pull Req: #{@user.pull_requests}
+        %th
+          Total: #{@user.total}

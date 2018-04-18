@@ -29,7 +29,6 @@ ActiveRecord::Schema.define(version: 20180402125435) do
     t.index ["mentee_id"], name: "index_contributions_on_mentee_id"
     t.index ["mentor_id"], name: "index_contributions_on_mentor_id"
     t.index ["user_id"], name: "index_contributions_on_user_id"
-    
   end
 
   create_table "projects", force: :cascade do |t|

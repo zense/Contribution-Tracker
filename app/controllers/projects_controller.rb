@@ -1,5 +1,8 @@
 class ProjectsController < ApplicationController
   before_action :set_project, except: [:index,:new,:create]
+  before_action :check_login
+  before_action :check_admin, only: [:remove_users, :delete_user, :add_mentees, :add_mentors,:save_mentees,:save_mentors, :new_mentee,:new_mentor]
+
 
   # GET /projects
   # GET /projects.json
@@ -52,7 +55,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    @user 
+    @user = @project.mentees.first
     @contribution 
   end
 
@@ -118,5 +121,19 @@ class ProjectsController < ApplicationController
 
     def params_user
       name = params.require(:user).permit(:name)
+    end
+
+    def check_login
+      if !current_user
+        redirect_to login
+      end
+    end
+
+    def check_admin
+      if current_user
+        current_user.admin
+      else
+        false
+      end
     end
 end
