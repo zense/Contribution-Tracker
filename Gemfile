@@ -5,6 +5,8 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+
+gem 'rake', '~> 12.3.0'
 gem 'bootstrap-generators', '~> 3.3.4'
 gem 'omniauth-github'
 gem 'sidekiq'
