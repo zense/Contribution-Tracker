@@ -5,7 +5,7 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
-
+gem 'whenever'
 gem 'rake', '~> 12.3.0'
 gem 'bootstrap-generators', '~> 3.3.4'
 gem 'haml-rails'
@@ -16,7 +16,7 @@ gem 'record_tag_helper', '~> 1.0'
 gem 'octokit', "~> 4.0"
 gem 'github_api', '~> 0.18.2'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'pg', '~> 0.17.1'
+gem 'pg'
 gem 'rails', '~> 5.1.4'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'

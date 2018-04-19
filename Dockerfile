@@ -2,7 +2,7 @@ FROM ruby:2.4
 
 # Install all dependencies upfront so the docker build can be cached
 RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs && apt-get install -y cron
-ENV RAILS_ENV=production
+ENV RAILS_ENV=development
 
 WORKDIR /app
 ADD .gemrc /app
