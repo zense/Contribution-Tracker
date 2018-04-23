@@ -19,5 +19,12 @@
     .col-sm-10
       = f.text_field :description, class: "form-control"
   .form-group
+    = f.label :status, class: "col-sm-2 control-label"
+    .col-sm-10
+      .dropdown
+        = f.select :status, [['In Progress', 0],['Completed',1],['Discarded',2]]
+
+      
+  .form-group
     .col-sm-offset-2.col-sm-10
       = f.submit class: "btn btn-primary"

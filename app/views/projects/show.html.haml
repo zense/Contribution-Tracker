@@ -1,26 +1,14 @@
 .page-header
   -if current_user.admin?
-    = link_to project_path(@project),method: 'delete', class: 'btn btn-danger' do
-      %span.glyphicon.glyphicon-pencil
-      Delete
-    = link_to edit_project_path(@project), class: 'btn btn-primary' do
-      %span.glyphicon.glyphicon-pencil
-      Edit
-    = link_to remove_users_path(@project), class: 'btn btn-danger' do
-      %span.glyphicon.glyphicon-pencil
-      Remove Members
-    = link_to add_mentees_path(@project), class: 'btn btn-primary' do
-      %span.glyphicon.glyphicon-pencil
-      Add Mentees
-    = link_to add_mentors_path(@project), class: 'btn btn-primary' do
-      %span.glyphicon.glyphicon-pencil
-      Add Mentors
+    =render 'projects/project_buttons'
   %h1 Show project
 %dl.dl-horizontal
   %dt Title:
   %dd= @project.title
   %dt Description:
   %dd= @project.description
+  %dt Status:
+  %dd= @status
   %br
   .row.row-custom
     .col-md-1

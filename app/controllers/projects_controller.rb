@@ -1,5 +1,5 @@
 class ProjectsController < ApplicationController
-  before_action :set_project, except: [:index,:new,:create]
+  before_action :set_project, except: [:in_progress,:discarded,:completed,:index,:new,:create]
   before_action :check_login
   before_action :check_admin, only: [:remove_users, :delete_user, :add_mentees, :add_mentors,:save_mentees,:save_mentors, :new_mentee,:new_mentor]
 
@@ -8,6 +8,18 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   def index
     @projects = Project.all
+  end
+
+  def in_progress
+    @projects = Project.where status: 0
+  end
+
+  def completed
+    @projects = Project.where status: 1
+  end
+
+  def discarded
+    @projects = Project.where status: 2
   end
 
   def remove_users
@@ -57,6 +69,13 @@ class ProjectsController < ApplicationController
   def show
     @user = @project.mentees.first
     @contribution 
+    if @project.status == 0
+      @status = "In Progress"
+    elsif @project.status == 1
+      @status = "Completed"
+    elsif @project.status == 2
+      @status = "Discarded"
+    end
   end
 
   # GET /projects/new
@@ -116,7 +135,7 @@ class ProjectsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:title, :description)
+      params.require(:project).permit(:title, :description,:status)
     end
 
     def params_user

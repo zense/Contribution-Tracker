@@ -4,13 +4,13 @@
     New Project
   %h1 Projects
   %ul.nav.nav-tabs
-    %li.active
-      =link_to 'All', ''
-    %li 
+    %li
+      =link_to 'All', projects_path
+    %li
       =link_to 'In Progress',in_progress_path
     %li 
       =link_to 'Completed',completed_path
-    %li 
+    %li.active  
       =link_to 'Discarded',discarded_path
 
 .table-responsive

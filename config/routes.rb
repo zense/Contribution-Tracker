@@ -14,6 +14,9 @@ Rails.application.routes.draw do
     get 'remove_users', to: 'projects#remove_users', as: 'remove_users'
     get 'delete_user', to: 'projects#delete_user', as: 'delete_user'
   end
+  get 'completed', to: 'projects#completed'
+  get 'in_progress', to: 'projects#in_progress'
+  get 'discarded', to: 'projects#discarded'
 
   get '/auth/:provider/callback', to: 'sessions#create'
   root 'contributions#index'
