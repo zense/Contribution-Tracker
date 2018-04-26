@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   get 'assigned', to: 'users#assigned'
   get 'not_assigned', to: 'users#not_assigned'
 
-  get '/auth/:provider/callback', to: 'sessions#create'
+  get '/auth/:provider', to: 'sessions#create'
   root 'contributions#index'
   get '/logout', to:'sessions#destroy'
   get '/pending', to: 'contributions#pending'
