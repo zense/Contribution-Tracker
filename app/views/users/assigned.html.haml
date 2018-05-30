@@ -21,7 +21,7 @@
           = i
         - i += 1
         %td
-          = link_to user.name, "/users/#{user.id}"
+          = link_to user.name + " (#{user.full_name})", "/users/#{user.id}"
         %td
           - user.working_projects.each do |project|
             %h5=project.title

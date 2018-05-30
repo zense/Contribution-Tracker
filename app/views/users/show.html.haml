@@ -1,4 +1,6 @@
 %h3= @user.name
+%h4= @user.full_name
+%br
 - if current_user.admin && !@user.admin
   = link_to "Add as admin", add_admin_path(add_user: @user), class: "btn btn-primary"
 - elsif current_user.admin
