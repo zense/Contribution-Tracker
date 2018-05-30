@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :check_login
   def index
     @users = User.all
   end
@@ -32,4 +33,10 @@ class UsersController < ApplicationController
     remove_admin.save
   end
 
+  private
+    def check_login
+      if !current_user
+        redirect_to login_url
+      end
+    end
 end
