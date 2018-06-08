@@ -28,19 +28,19 @@ services:
     ports:
       - '6379:6379'
 
-    sidekiq:
-      build: .
-      command: bash -c "sidekiq -C condig/sidekiq.yml.erb"
-      depends_on:
-        - redis
-      external_links:
-        - postgres:db
-      volumes:
-        - '.:/app'
-      networks:
-        - production
-      env_file:
-        - '.env'
+  sidekiq:
+    build: .
+    command: bash -c "sidekiq -C condig/sidekiq.yml.erb"
+    depends_on:
+      - redis
+    external_links:
+      - postgres:db
+    volumes:
+      - '.:/app'
+    networks:
+      - production
+    env_file:
+      - '.env'
 
 
 
