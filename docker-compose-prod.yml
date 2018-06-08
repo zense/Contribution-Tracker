@@ -10,12 +10,38 @@ services:
     volumes:
       - ".:/app"
     env_file: .env
+    depends_on:
+      - redis
     external_links:
       - postgres:db
     command: bash -c "bundle exec rake assets:precompile && bundle exec rake db:create && bundle exec wheneverize . && bundle exec rake db:migrate && bundle exec rails s"
     networks:
       - production
     restart: always
+
+  redis:
+    image: redis:4.0-alpine
+    external_links:
+      - postgres:db
+    networks:
+      - production
+    ports:
+      - '6379:6379'
+
+    sidekiq:
+      build: .
+      command: bash -c "sidekiq -C condig/sidekiq.yml.erb"
+      depends_on:
+        - redis
+      external_links:
+        - postgres:db
+      volumes:
+        - '.:/app'
+      networks:
+        - production
+      env_file:
+        - '.env'
+
 
 
 
