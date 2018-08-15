@@ -9,7 +9,7 @@ class FetchContributionsWorker
   end
 end
 
-FetchContributionsWorker.perform_in(10.seconds)
+#FetchContributionsWorker.perform_in(10.seconds)
 
 
 

@@ -5,11 +5,24 @@ class UsersController < ApplicationController
   end
 
   def assigned
-    @users= User.all
+    @users = []
+    User.all.each do |user|
+      projects = user.working_projects.where(status: 0)
+      if projects.empty? == false
+        @user.append(user)
+      end
+    end
+
   end
   
   def not_assigned
-    @users= User.all
+    @users = []
+    User.all.each do |user|
+      projects = user.working_projects.where(status: 0)
+      if projects.empty? == true
+        @user.append(user)
+      end
+    end
   end
 
   def show

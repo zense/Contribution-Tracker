@@ -11,6 +11,7 @@ gem 'bootstrap-generators', '~> 3.3.4'
 gem 'haml-rails'
 gem 'omniauth-github'
 gem 'sidekiq'
+gem 'rails_admin'
 gem 'redis-namespace'
 gem 'record_tag_helper', '~> 1.0'
 gem 'octokit', "~> 4.0"
